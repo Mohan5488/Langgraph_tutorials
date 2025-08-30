@@ -1,12 +1,18 @@
-from typing import TypedDict
+from typing import TypedDict, List, Annotated
 from langgraph.graph import END, StateGraph
+import operator
 
 class SimpleState(TypedDict):
     count : int
+    sum_ : Annotated[int, operator.add]
+    history : Annotated[List[int], operator.add]
 
 def increment(state):
+    new_value = state["count"] + 1
     return {
-        "count" : state["count"] + 1
+        "count" : new_value,
+        "sum_" : new_value,
+        "history" : [(state["sum_"], state["count"])]
     }
 
 def should_continue(state):
@@ -33,7 +39,9 @@ app = graph.compile()
 print(app.get_graph().draw_mermaid())
 
 state = {
-    "count" : 0
+    "count" : 1,
+    "sum_" : 1,
+    "history" : []
 }
 
 res = app.invoke(state)

@@ -37,7 +37,8 @@ validation = PydanticToolsParser(tools=[AnswerQuestion])
 
 # Revisor section
 
-revise_instructions = """Revise your previous answer using the new information.
+revise_instructions = """
+    Revise your previous answer using the new information.
     - You should use the previous critique to add important information to your answer.
         - You MUST include numerical citations in your revised answer to ensure it can be verified.
         - Add a "References" section to the bottom of your answer (which does not count towards the word limit). In form of:
